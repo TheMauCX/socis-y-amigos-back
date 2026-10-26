@@ -1,10 +1,10 @@
 package pe.com.edu.socisyamigos.config;
 
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,11 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private String jwtSecret = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
-    private long jwtExpirationDate = 3600000; //1h = 3600s and 3600*1000 = 3600000 milliseconds
+    @Value("${app.jwt-secret}")
+    private String jwtSecret;
+
+    @Value("${app.jwt-expiration-milliseconds}")
+    private long jwtExpirationDate; //1h = 3600s and 3600*1000 = 3600000 milliseconds
 
     public String generateToken(Authentication authentication) {
 
